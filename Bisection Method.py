@@ -1,4 +1,4 @@
-# define function with potential roots we are searching for
+# define function with potential roots we are looking for 
 import math
 
 
