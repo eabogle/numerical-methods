@@ -12,7 +12,7 @@ yactual = yact(t0)
 
 print('step', '\t''t', '\t''\t''y approx', '\t''\t''y actual')
 print(0, '\t'''"%.8f" % t, '\t'''"%.8f" % y, '\t'"%.8f" % yactual)
-n = 0
+n = 1
 
 def fe(t, y, h):
     def f(t, y):
@@ -22,7 +22,7 @@ def fe(t, y, h):
 def me(t, y, h):
     def f(t, y):
         return ((1/y) * pow(t,2))
-    return(y + h * f((t + h/2), (y + (h/2) * f(t, y))))
+    return(y + h * f((t + h/2), y + (h/2) * f(t, y)))
 
 def te(t, y, h):
     def f(t, y):
@@ -31,11 +31,11 @@ def te(t, y, h):
 
 #while (t+h <= tF):
 while (n <= 8):
+    # y = fe(t, y, h)
+    # y = me (t, y, h)
+    y = te(t, y, h)
+    yactual = yact(t + h)
+    print(n, '\t'''"%.8f" % t, '\t'"%.8f" % y, '\t'"%.8f" % yactual)
     t = t + h
     n = n + 1
-    y = fe(t, y, h)
-    yactual = yact(t)
-    # y = me (t, y, h)
-    # y = te(t, y, h)
-    print(n, '\t'''"%.8f" % t, '\t'"%.8f" % y, '\t'"%.8f" % yactual)
 
