@@ -29,7 +29,6 @@ hmin = 1 / pow(2, -11)
 y0 = 1
 lamb = (-1) * 30
 
-emaximum = 0
 emaxold = 0.0
 h = 0.25
 
