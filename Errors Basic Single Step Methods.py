@@ -29,6 +29,7 @@ hmin = 1 / pow(2, -11)
 y0 = 1
 lamb = (-1) * 30
 
+emaximum = 0
 emaxold = 0.0
 h = 0.25
 
@@ -36,7 +37,7 @@ print('h', '\t''\t''\t''max error', '\t''\t''\t''error ratio')
 
 while (h >= hmin):
     print('test1')
-    emax = 0
+    emaximum = 0
     tmax = 0
     t = t0
     y = y0
@@ -44,16 +45,17 @@ while (h >= hmin):
     while (t + h <= tF):
         print('test2')
         y = fe(t, y, h)
-        #y = bee(t, y, h)
-        #y = m(t, y, h)
-        #y = tpc(t, y, h)
+        # y = bee(t, y, h)
+        # y = m(t, y, h)
+        # y = tpc(t, y, h)
         t = t + h
         actual = yact(t)
         e = abs(y - actual)
-        if (e > emax):
-            emax = e
-            tmax = t
 
-    ratio = emaxold/emax
-    print(h, '\t'''"%.8f" % emax, '\t'''"%.8f" % ratio)
+        if (e > emaximum):
+            emaximum = e
 
+    ratio = emaxold / emaximum
+    print(h, '\t'''"%.8f" % emaximum, '\t'''"%.8f" % ratio)
+    h = h * (0.5)
+    emaxold = emaximum
