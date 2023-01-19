@@ -3,28 +3,38 @@ import math
 #Defining variables
 tzero = 0
 tF = math.pi
+#tF = 4/3
 hmin = 1 / pow(2, 11)
 yzero = 1
 lamb = (-1) * 30
+#lamb =
 
 #Defining functions
 def f(t,y):
     return(lamb * (y - math.cos(t)) - math.sin(t))
+    #return((-1) * pow(abs(y), (1/4)))
 
 def yact(t):
     return(math.cos(t))
+    #return(pow(1 - (3/4) * t), 4/3)
 
 def fe(t, y, h):
     return(y + h * f(t, y))
 
 def bee(t, y, h):
-    return((1 / (1 - h * lamb)) * y - (h / (1 - h * lamb)) * (lamb * math.cos(t + h) + math.sin(t + h)))
+    #return((1 / (1 - h * lamb)) * y - (h / (1 - h * lamb)) * (lamb * math.cos(t + h) + math.sin(t + h)))
+    return()
 
 def m(t, y, h):
     return(y + h * f((t + h/2), y + (h/2) * f(t, y)))
 
 def te(t, y, h):
-    return((1 + (h * lamb)/2) * y - (h/2) * (lamb * math.cos(t) - math.sin(t)))
+    return(((1 + (h * lamb)/2)/(1 - (h * lamb)/2)) * y
+           + ((h/2)*(1/(1 - (h * lamb)/2))) *
+           ((-1)* lamb * math.cos(t) - math.sin(t) - (lamb * math.cos(t + h)) - math.sin(t+h)))
+
+
+    #return()
 
 def tpc(t, y, h):
     return(y + (h/2) * (f(t, y) + f((t + h), (y + h * f(t, y)))))
@@ -35,7 +45,7 @@ y = yzero
 emaxold = 0
 h = 0.25
 
-print('Forward Euler Explicit')
+print('Trapezoid Explicit')
 print('h', '\t''\t''max error', '\t''\t''error ratio')
 
 #First while loop for h values
