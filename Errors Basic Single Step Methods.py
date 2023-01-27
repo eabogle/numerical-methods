@@ -2,16 +2,16 @@ import math
 
 #Defining variables
 tzero = 0
-#tF = math.pi
-tF = 1
+tF = math.pi
+#tF = 1
 hmin = 1 / pow(2, 11)
 yzero = 1
-#lamb = (-1) * 30
+lamb = (-1) * 30
 
 #Defining functions
 def f(t,y):
-    #return(lamb * (y - math.cos(t)) - math.sin(t))
-    return((-1) * pow(abs(y), (1/4)))
+    return(lamb * (y - math.cos(t)) - math.sin(t))
+    #return((-1) * pow(abs(y), (1/4)))
 
 def df(t,y):
     #return(lamb)
@@ -21,8 +21,8 @@ def df(t,y):
         return((1/4) * pow(-y, -3/4))
 
 def yact(t):
-    #return(math.cos(t))
-    return(pow((1 - (3/4) * t), 4/3))
+    return(math.cos(t))
+    #return(pow((1 - (3/4) * t), 4/3))
 
 def fe(t, y, h):
     return(y + h * f(t, y))
@@ -52,7 +52,6 @@ def te(t, y, h):
            + ((h/2)*(1/(1 - (h * lamb)/2))) *
            ((-1)* lamb * math.cos(t) - math.sin(t) - (lamb * math.cos(t + h)) - math.sin(t+h)))
 
-
 def trap(t, y, h):
     j = 0
     jmax = 2
@@ -70,13 +69,19 @@ def trap(t, y, h):
 def tpc(t, y, h):
     return(y + (h/2) * (f(t, y) + f((t + h), (y + h * f(t, y)))))
 
+def RKthree(t, y, h):
+    K1 = f(t,y)
+    K2 = f(t + (1/2) * h, y + h * (1/2) * K1)
+    K3 = f(t + h, y + h * ((-1) * K1 + 2 * K2))
+    return(y + h * ((1/6) * K1 + (2/3) * K2 + (1/6) * K3))
+
 #Initialization
 t = tzero
 y = yzero
 emaxold = 0
 h = 0.25
 
-print('Trapezoid Predictor Corrector')
+print('RK(3); Lambda = -30')
 print('h', '\t''\t''max error', '\t''\t''error ratio')
 
 #First while loop for h values
@@ -94,7 +99,8 @@ while (h >= hmin):
         # y = m(t, y, h)
         # y = te(t, y, h)
         # y = trap(t, y, h)
-        y = tpc(t, y, h)
+        # y = tpc(t, y, h)
+        y = RKthree(t, y, h)
         t = t + h
         actual = yact(t)
         err = abs(y - actual)
