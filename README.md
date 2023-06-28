@@ -1,2 +1,2 @@
 # num-calc
-Housing all Numerical Calculus codes for class, homework, study. 
+Housing all Numerical Methods codes for class (MTH 551-553), homework, and study. 
